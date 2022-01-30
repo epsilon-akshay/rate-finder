@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -32,7 +33,7 @@ func ConvertCurrency(converter CurrencyConverter) http.HandlerFunc {
 			return
 		}
 
-		convAmount, err := converter.GetConvertedAmountFrom(base, amount)
+		convAmount, err := converter.GetConvertedAmountFrom(r.Context(), base, amount)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			r := &Response{
@@ -55,5 +56,5 @@ func ConvertCurrency(converter CurrencyConverter) http.HandlerFunc {
 }
 
 type CurrencyConverter interface {
-	GetConvertedAmountFrom(base string, amount float64) (float64, error)
+	GetConvertedAmountFrom(ctx context.Context, base string, amount float64) (float64, error)
 }

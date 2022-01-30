@@ -2,12 +2,12 @@ package handler
 
 import "context"
 
-type mockService func() (float64, error)
+type mockService func(ctx context.Context) (float64, error)
 
 type mockKeyGen func(ctx context.Context) (string, error)
 
-func (m mockService) GetConvertedAmountFrom(base string, amount float64) (float64, error) {
-	return m()
+func (m mockService) GetConvertedAmountFrom(ctx context.Context, base string, amount float64) (float64, error) {
+	return m(ctx)
 }
 
 func (m mockKeyGen) GenerateKey(ctx context.Context) (string, error) {

@@ -1,15 +1,17 @@
 package usecase
 
+import "context"
+
 type ConvertionRateFetcher interface {
-	GetTargetConversionRate() (float64, error)
+	GetTargetConversionRate(ctx context.Context) (float64, error)
 }
 
 type ConversionCalculator struct {
 	RateFinder ConvertionRateFetcher
 }
 
-func (c ConversionCalculator) GetConvertedAmountFrom(base string, amount float64) (float64, error) {
-	euroTodollarRate, err := c.RateFinder.GetTargetConversionRate()
+func (c ConversionCalculator) GetConvertedAmountFrom(ctx context.Context, base string, amount float64) (float64, error) {
+	euroTodollarRate, err := c.RateFinder.GetTargetConversionRate(ctx)
 	if err != nil {
 		return 0, err
 	}

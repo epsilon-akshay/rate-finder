@@ -1,9 +1,11 @@
 package usecase
 
-type mockrateFinder func() (float64, error)
+import "context"
 
-func (m mockrateFinder) GetTargetConversionRate() (float64, error) {
-	return m()
+type mockrateFinder func(ctx context.Context) (float64, error)
+
+func (m mockrateFinder) GetTargetConversionRate(ctx context.Context) (float64, error) {
+	return m(ctx)
 }
 
 type mockKeyGen func() string

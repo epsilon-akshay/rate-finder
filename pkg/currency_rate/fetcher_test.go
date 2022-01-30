@@ -1,6 +1,7 @@
 package currency_rate
 
 import (
+	"context"
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -16,7 +17,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			Url: "http://[::1]:namedport",
 		}
 
-		val, err := client.GetTargetConversionRate()
+		val, err := client.GetTargetConversionRate(context.Background())
 
 		actualVal := float64(0)
 		expectedErr := "parse \"http://[::1]:namedport\": invalid port \":namedport\" after host"
@@ -39,7 +40,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
-		val, err := client.GetTargetConversionRate()
+		val, err := client.GetTargetConversionRate(context.Background())
 
 		actualVal := float64(0)
 		expectedErr := "could not fetch response with statusCode 400"
@@ -59,7 +60,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
-		val, err := client.GetTargetConversionRate()
+		val, err := client.GetTargetConversionRate(context.Background())
 
 		actualVal := float64(0)
 		expectedErr := "random error"
@@ -82,7 +83,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
-		val, err := client.GetTargetConversionRate()
+		val, err := client.GetTargetConversionRate(context.Background())
 		require.NoError(t, err, "no error")
 
 		actualVal := float64(1.1)
@@ -103,7 +104,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
-		val, err := client.GetTargetConversionRate()
+		val, err := client.GetTargetConversionRate(context.Background())
 
 		actualVal := float64(0)
 		expectedErr := "json: cannot unmarshal string into Go struct field .rates.USD of type float64"

@@ -1,6 +1,7 @@
 package currency_rate
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -25,8 +26,8 @@ type FixerResponse struct {
 	} `json:"rates"`
 }
 
-func (c FixerClient) GetTargetConversionRate() (float64, error) {
-	req, err := http.NewRequest("GET", c.Url, nil)
+func (c FixerClient) GetTargetConversionRate(ctx context.Context) (float64, error) {
+	req, err := http.NewRequestWithContext(ctx, "GET", c.Url, nil)
 	if err != nil {
 		return 0, err
 	}

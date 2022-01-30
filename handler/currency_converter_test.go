@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"github.com/stretchr/testify/assert"
@@ -13,7 +14,7 @@ import (
 
 func TestConvertCurrency(t *testing.T) {
 	t.Run("should return 400 response when amount passed is not float", func(t *testing.T) {
-		m := mockService(func() (float64, error) {
+		m := mockService(func(ctx context.Context) (float64, error) {
 			return 64, nil
 		})
 
@@ -33,7 +34,7 @@ func TestConvertCurrency(t *testing.T) {
 		assert.Equal(t, string(expectedResponse), `{"success":false,"err":"strconv.ParseFloat: parsing \"ooo\": invalid syntax"}`)
 	})
 	t.Run("should return 5xx response when failed to convert amount", func(t *testing.T) {
-		m := mockService(func() (float64, error) {
+		m := mockService(func(ctx context.Context) (float64, error) {
 			return 0, errors.New("failed to convert amount")
 		})
 
@@ -54,7 +55,7 @@ func TestConvertCurrency(t *testing.T) {
 	})
 
 	t.Run("should return 2xx response wiuth right amount when convert amount succeeds", func(t *testing.T) {
-		m := mockService(func() (float64, error) {
+		m := mockService(func(ctx context.Context) (float64, error) {
 			return 54, nil
 		})
 
