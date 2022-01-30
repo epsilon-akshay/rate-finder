@@ -17,3 +17,12 @@ func (r GoRedis) SetKey(ctx context.Context, key string) error {
 
 	return nil
 }
+
+func (r GoRedis) GetKey(ctx context.Context, key string) (string, error) {
+	res, err := r.Client.Get(ctx, key).Result()
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
