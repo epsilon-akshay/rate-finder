@@ -1,7 +1,7 @@
 package usecase
 
 type ConvertionRateFetcher interface {
-	GetTargetConversionRate(base string) (float64, error)
+	GetTargetConversionRate() (float64, error)
 }
 
 type ConversionCalculator struct {
@@ -9,10 +9,12 @@ type ConversionCalculator struct {
 }
 
 func (c ConversionCalculator) GetConvertedAmountFrom(base string, amount float64) (float64, error) {
-	rate, err := c.RateFinder.GetTargetConversionRate(base)
+	euroTodollarRate, err := c.RateFinder.GetTargetConversionRate()
 	if err != nil {
 		return 0, err
 	}
-
-	return rate * amount, nil
+	if base == "EUR" {
+		return euroTodollarRate * amount, nil
+	}
+	return amount / euroTodollarRate, nil
 }

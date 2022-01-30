@@ -29,8 +29,21 @@ func TestGetConvertedAmountFrom(t *testing.T) {
 			RateFinder: client,
 		}
 
-		res, err := service.GetConvertedAmountFrom("USD", float64(1))
+		res, err := service.GetConvertedAmountFrom("EUR", float64(1))
 		require.NoError(t, err)
 		assert.Equal(t, res, float64(1.2))
+	})
+
+	t.Run("should return amount/rate when rate finder succeeds in calculating rate", func(t *testing.T) {
+		client := mockrateFinder(func() (float64, error) {
+			return 1.2, nil
+		})
+		service := ConversionCalculator{
+			RateFinder: client,
+		}
+
+		res, err := service.GetConvertedAmountFrom("USD", float64(120))
+		require.NoError(t, err)
+		assert.Equal(t, res, float64(100))
 	})
 }

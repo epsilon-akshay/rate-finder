@@ -25,7 +25,7 @@ type FixerResponse struct {
 	} `json:"rates"`
 }
 
-func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
+func (c FixerClient) GetTargetConversionRate() (float64, error) {
 	req, err := http.NewRequest("GET", c.Url, nil)
 	if err != nil {
 		return 0, err
@@ -33,7 +33,6 @@ func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
 
 	q := req.URL.Query()
 	q.Add("access_key", c.AccessKey)
-	q.Add("base", base)
 	req.URL.RawQuery = q.Encode()
 
 	res, err := c.HttpClient.Do(req)
@@ -58,10 +57,8 @@ func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
 	if err != nil {
 		return 0, err
 	}
+	fmt.Println(fixerRes.Rates)
 
-	if base == "USD" {
-		return fixerRes.Rates.EUR, nil
-	} else {
-		return fixerRes.Rates.USD, nil
-	}
+	return fixerRes.Rates.USD, nil
+
 }

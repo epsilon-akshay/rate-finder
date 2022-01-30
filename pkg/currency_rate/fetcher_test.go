@@ -16,7 +16,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			Url: "http://[::1]:namedport",
 		}
 
-		val, err := client.GetTargetConversionRate("USD")
+		val, err := client.GetTargetConversionRate()
 
 		actualVal := float64(0)
 		expectedErr := "parse \"http://[::1]:namedport\": invalid port \":namedport\" after host"
@@ -39,7 +39,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
-		val, err := client.GetTargetConversionRate("USD")
+		val, err := client.GetTargetConversionRate()
 
 		actualVal := float64(0)
 		expectedErr := "could not fetch response with statusCode 400"
@@ -59,33 +59,12 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
-		val, err := client.GetTargetConversionRate("USD")
+		val, err := client.GetTargetConversionRate()
 
 		actualVal := float64(0)
 		expectedErr := "random error"
 
 		assert.Equal(t, err.Error(), expectedErr)
-		assert.Equal(t, val, actualVal)
-	})
-
-	t.Run("should return appropriate target rate for Euro when a client.do returns success", func(t *testing.T) {
-		mockHttpClient := func() (*http.Response, error) {
-			stringReader := strings.NewReader(`{"rates": {"EUR": 1.1}}`)
-			stringReadCloser := io.NopCloser(stringReader)
-
-			return &http.Response{StatusCode: 200, Body: stringReadCloser}, nil
-		}
-
-		client := FixerClient{
-			Url:        "http://fixer",
-			AccessKey:  "RANDOM",
-			HttpClient: mockHttpDoer(mockHttpClient),
-		}
-
-		val, err := client.GetTargetConversionRate("USD")
-		require.NoError(t, err, "no error")
-
-		actualVal := float64(1.1)
 		assert.Equal(t, val, actualVal)
 	})
 
@@ -103,7 +82,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
-		val, err := client.GetTargetConversionRate("EUR")
+		val, err := client.GetTargetConversionRate()
 		require.NoError(t, err, "no error")
 
 		actualVal := float64(1.1)
@@ -124,7 +103,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
-		val, err := client.GetTargetConversionRate("EUR")
+		val, err := client.GetTargetConversionRate()
 
 		actualVal := float64(0)
 		expectedErr := "json: cannot unmarshal string into Go struct field .rates.USD of type float64"

@@ -40,13 +40,10 @@ func main() {
 
 	r := handler.Router(currencyConverter, keyGenClient)
 
-	server := &http.Server{
-		Addr:    fmt.Sprintf(":%d", Port),
-		Handler: r,
-	}
-
-	err := server.ListenAndServe()
+	fmt.Println("Server started listening to port 8000")
+	err := http.ListenAndServe(fmt.Sprintf(":%d", Port), r)
 	if err != nil {
 		panic(err)
 	}
+
 }
