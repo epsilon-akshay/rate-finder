@@ -31,7 +31,6 @@ func TestConvertCurrency(t *testing.T) {
 		res.Body.Close()
 		assert.Equal(t, res.StatusCode, http.StatusBadRequest)
 		assert.Equal(t, string(expectedResponse), `{"success":false,"err":"strconv.ParseFloat: parsing \"ooo\": invalid syntax"}`)
-		ConvertCurrency(m)
 	})
 	t.Run("should return 5xx response when failed to convert amount", func(t *testing.T) {
 		m := mockService(func() (float64, error) {
@@ -52,7 +51,6 @@ func TestConvertCurrency(t *testing.T) {
 		res.Body.Close()
 		assert.Equal(t, res.StatusCode, http.StatusInternalServerError)
 		assert.Equal(t, string(expectedResponse), `{"success":false,"err":"failed to convert amount"}`)
-		ConvertCurrency(m)
 	})
 
 	t.Run("should return 2xx response wiuth right amount when convert amount succeeds", func(t *testing.T) {
@@ -74,6 +72,5 @@ func TestConvertCurrency(t *testing.T) {
 		res.Body.Close()
 		assert.Equal(t, res.StatusCode, http.StatusOK)
 		assert.Equal(t, string(expectedResponse), `{"success":true,"converted_amount":54}`)
-		ConvertCurrency(m)
 	})
 }

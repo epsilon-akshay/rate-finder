@@ -29,6 +29,7 @@ func ConvertCurrency(converter CurrencyConverter) http.HandlerFunc {
 			}
 			resp, _ := json.Marshal(r)
 			w.Write(resp)
+			return
 		}
 
 		convAmount, err := converter.GetConvertedAmountFrom(base, amount)
@@ -40,6 +41,7 @@ func ConvertCurrency(converter CurrencyConverter) http.HandlerFunc {
 			}
 			resp, _ := json.Marshal(r)
 			w.Write(resp)
+			return
 		}
 
 		w.WriteHeader(http.StatusOK)
