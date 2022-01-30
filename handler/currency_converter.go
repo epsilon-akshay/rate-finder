@@ -17,12 +17,23 @@ func ConvertCurrency(converter CurrencyConverter) http.HandlerFunc {
 		w.Header().Set("Content-Type", "application/json")
 
 		params := r.URL.Query()
-
+		base := params.Get("base")
 		amountStr := params.Get("amount")
 
-		_, err := strconv.ParseFloat(amountStr, 64)
+		amount, err := strconv.ParseFloat(amountStr, 64)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
+			r := &Response{
+				Success: false,
+				Err:     err.Error(),
+			}
+			resp, _ := json.Marshal(r)
+			w.Write(resp)
+		}
+
+		_, err = converter.GetConvertedAmountFrom(base, amount)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			r := &Response{
 				Success: false,
 				Err:     err.Error(),
