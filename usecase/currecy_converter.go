@@ -8,7 +8,11 @@ type ConversionCalculator struct {
 	RateFinder ConvertionRateFetcher
 }
 
-func (c ConversionCalculator) GetConvertedAmountFrom(base string) (float64, error) {
-	_, err := c.RateFinder.GetTargetConversionRate(base)
-	return 0, err
+func (c ConversionCalculator) GetConvertedAmountFrom(base string, amount float64) (float64, error) {
+	rate, err := c.RateFinder.GetTargetConversionRate(base)
+	if err != nil {
+		return 0, err
+	}
+
+	return rate * amount, nil
 }
