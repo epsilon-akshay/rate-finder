@@ -10,3 +10,8 @@ To get rates, you can use the free plan of this API: https://fixer.io
 ###usage 
 
 ###sample curls
+
+
+## breaks taken
+1. 2022-01-30 19:36 +0530 88ef33359b890829cbdd21f98fea6e38cdb3432c 30 min break
+2. 
