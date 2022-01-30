@@ -35,7 +35,10 @@ func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
 	q.Add("base", base)
 	req.URL.RawQuery = q.Encode()
 
-	res, _ := c.httpClient.Do(req)
+	res, err := c.httpClient.Do(req)
+	if err != nil {
+		return 0, err
+	}
 
 	defer res.Body.Close()
 

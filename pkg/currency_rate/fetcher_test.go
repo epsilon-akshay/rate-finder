@@ -1,6 +1,7 @@
 package currency_rate
 
 import (
+	"errors"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"net/http"
@@ -41,6 +42,26 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 
 		actualVal := float64(0)
 		expectedErr := "could not fetch response with statusCode 400"
+
+		assert.Equal(t, err.Error(), expectedErr)
+		assert.Equal(t, val, actualVal)
+	})
+
+	t.Run("should return error when a client.do throws errors", func(t *testing.T) {
+		mockHttpClient := func() (*http.Response, error) {
+			return nil, errors.New("random error")
+		}
+
+		client := FixerClient{
+			Url:        "http://fixer",
+			AccessKey:  "RANDOM",
+			httpClient: mockHttpDoer(mockHttpClient),
+		}
+
+		val, err := client.GetTargetConversionRate("USD")
+
+		actualVal := float64(0)
+		expectedErr := "random error"
 
 		assert.Equal(t, err.Error(), expectedErr)
 		assert.Equal(t, val, actualVal)
