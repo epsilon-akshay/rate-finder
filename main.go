@@ -24,16 +24,19 @@ func main() {
 		Password: "",
 		DB:       0,
 	}
-
+	redisCli := redis.NewClient(redisOpt)
 	httpClient := http.DefaultClient
 
 	currencyConverter := usecase.ConversionCalculator{
 		RateFinder: currency_rate.FixerClient{AccessKey: FixerAccessKey, Url: FixerURL, HttpClient: httpClient},
+		ApiKeyStore: repository.GoRedis{
+			Client: redisCli,
+		},
 	}
 
 	keyGenClient := usecase.ProtectApiClient{
 		KeyHolder: repository.GoRedis{
-			Client: redis.NewClient(redisOpt),
+			Client: redisCli,
 		},
 		KeyGenerator: usecase.RandomGen{LetterRunes: Letters, Size: Size},
 	}

@@ -10,19 +10,26 @@ To get rates, you can use the free plan of this API: https://fixer.io
 2. localhost:8000/v1/currency_converter/currency/convert?base=EUR&amount=100
 3. localhost:8000/v1/currency_converter/currency/convert?base=USD&amount=100
 
+## Usage 
+1. hit the generate api curl
+2. get the api key and pass it on to convertion api
+   1. conversion api takes base, amount and api_key as params
+   2. base is the current currency
+   3. the result will be in euro if the base is in dollar and the result will be in dollar if the base in eur
+
 ###sample curls
 1. Generate API key
 ``curl localhost:8000/v1/currency_converter/api_key``
    1. response:
       1. `{"success":true,"api_key":"XVlBzgbaiCMRAjWwhTHctcuAxhxKQFDa"}`
 2. Convert Euro to Dollar
-   1. `localhost:8000/v1/currency_converter/currency/convert?base=EUR&amount=100`
+   1. `localhost:8000/v1/currency_converter/currency/convert?base=EUR&amount=100&api_key=XVlBzgbaiCMRAjWwhTHctcuAxhxKQFDa`
       1. ``{
          "success": true,
          "converted_amount": 111.47890000000001
          }``
 3. Convert Dollar to Euro
-   1. `localhost:8000/v1/currency_converter/currency/convert?base=USD&amount=100`
+   1. `localhost:8000/v1/currency_converter/currency/convert?base=USD&amount=100&api_key=XVlBzgbaiCMRAjWwhTHctcuAxhxKQFDa`
       1. `{
          "success": true,
          "converted_amount": 89.7029933888894
