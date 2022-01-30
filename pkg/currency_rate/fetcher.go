@@ -1,6 +1,7 @@
 package currency_rate
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -42,7 +43,7 @@ func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
 
 	defer res.Body.Close()
 
-	_, err = ioutil.ReadAll(res.Body)
+	httpRes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return 0, err
 	}
@@ -51,5 +52,13 @@ func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
 		return 0, fmt.Errorf("could not fetch response with statusCode %v", res.StatusCode)
 	}
 
-	return 0, nil
+	var fixerRes FixerResponse
+
+	json.Unmarshal(httpRes, &fixerRes)
+
+	if base == "USD" {
+		return fixerRes.Rates.EUR, nil
+	} else {
+		return fixerRes.Rates.USD, nil
+	}
 }

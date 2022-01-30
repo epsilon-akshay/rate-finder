@@ -3,6 +3,7 @@ package currency_rate
 import (
 	"errors"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"io"
 	"net/http"
 	"strings"
@@ -66,4 +67,26 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 		assert.Equal(t, err.Error(), expectedErr)
 		assert.Equal(t, val, actualVal)
 	})
+
+	t.Run("should return appropriate target rate when a client.do returns success", func(t *testing.T) {
+		mockHttpClient := func() (*http.Response, error) {
+			stringReader := strings.NewReader(`{"rates": {"EUR": 1.1}}`)
+			stringReadCloser := io.NopCloser(stringReader)
+
+			return &http.Response{StatusCode: 200, Body: stringReadCloser}, nil
+		}
+
+		client := FixerClient{
+			Url:        "http://fixer",
+			AccessKey:  "RANDOM",
+			httpClient: mockHttpDoer(mockHttpClient),
+		}
+
+		val, err := client.GetTargetConversionRate("USD")
+		require.NoError(t, err, "no error")
+
+		actualVal := float64(1.1)
+		assert.Equal(t, val, actualVal)
+	})
+
 }
