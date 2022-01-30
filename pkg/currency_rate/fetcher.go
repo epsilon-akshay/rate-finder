@@ -57,7 +57,6 @@ func (c FixerClient) GetTargetConversionRate() (float64, error) {
 	if err != nil {
 		return 0, err
 	}
-	fmt.Println(fixerRes.Rates)
 
 	return fixerRes.Rates.USD, nil
 
