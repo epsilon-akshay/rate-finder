@@ -10,7 +10,8 @@ type ConversionCalculator struct {
 	RateFinder ConvertionRateFetcher
 }
 
-func (c ConversionCalculator) GetConvertedAmountFrom(ctx context.Context, base string, amount float64) (float64, error) {
+func (c ConversionCalculator) GetConvertedAmountFrom(ctx context.Context, base string, amount float64, key string) (float64, error) {
+
 	euroTodollarRate, err := c.RateFinder.GetTargetConversionRate(ctx)
 	if err != nil {
 		return 0, err

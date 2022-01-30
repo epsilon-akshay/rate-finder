@@ -17,7 +17,7 @@ func TestGetConvertedAmountFrom(t *testing.T) {
 			RateFinder: client,
 		}
 
-		_, err := service.GetConvertedAmountFrom(context.Background(), "USD", float64(1))
+		_, err := service.GetConvertedAmountFrom(context.Background(), "USD", float64(1), "")
 		expectedErr := "failed to convert"
 		assert.Equal(t, err.Error(), expectedErr)
 	})
@@ -30,7 +30,7 @@ func TestGetConvertedAmountFrom(t *testing.T) {
 			RateFinder: client,
 		}
 
-		res, err := service.GetConvertedAmountFrom(context.Background(), "EUR", float64(1))
+		res, err := service.GetConvertedAmountFrom(context.Background(), "EUR", float64(1), "")
 		require.NoError(t, err)
 		assert.Equal(t, res, float64(1.2))
 	})
@@ -43,7 +43,7 @@ func TestGetConvertedAmountFrom(t *testing.T) {
 			RateFinder: client,
 		}
 
-		res, err := service.GetConvertedAmountFrom(context.Background(), "USD", float64(120))
+		res, err := service.GetConvertedAmountFrom(context.Background(), "USD", float64(120), "")
 		require.NoError(t, err)
 		assert.Equal(t, res, float64(100))
 	})
