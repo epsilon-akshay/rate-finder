@@ -1,0 +1,4 @@
+.idea/
+out/
+docker_data/
+dump.rdb

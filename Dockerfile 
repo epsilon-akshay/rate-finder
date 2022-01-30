@@ -1,0 +1,4 @@
+FROM golang:latest
+RUN mkdir /currency-converter
+WORKDIR  /currency-converter
+COPY . .
