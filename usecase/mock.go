@@ -13,3 +13,16 @@ type mockKeyGen func() string
 func (m mockKeyGen) RandStringRunes() string {
 	return m()
 }
+
+type mockRepo struct {
+	val string
+	err error
+}
+
+func (r mockRepo) SetKey(ctx context.Context, key string) error {
+	return r.err
+}
+
+func (r mockRepo) GetKey(ctx context.Context, key string) (string, error) {
+	return r.val, r.err
+}

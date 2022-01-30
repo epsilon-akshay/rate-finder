@@ -4,6 +4,7 @@ import "context"
 
 type Repository interface {
 	SetKey(ctx context.Context, key string) error
+	GetKey(ctx context.Context, key string) (string, error)
 }
 
 type RandomStringGenerator interface {
