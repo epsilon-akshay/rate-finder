@@ -54,7 +54,10 @@ func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
 
 	var fixerRes FixerResponse
 
-	json.Unmarshal(httpRes, &fixerRes)
+	err = json.Unmarshal(httpRes, &fixerRes)
+	if err != nil {
+		return 0, err
+	}
 
 	if base == "USD" {
 		return fixerRes.Rates.EUR, nil

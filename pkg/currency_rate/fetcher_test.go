@@ -110,4 +110,27 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 		assert.Equal(t, val, actualVal)
 	})
 
+	t.Run("should return error when unmarshalling fails", func(t *testing.T) {
+		mockHttpClient := func() (*http.Response, error) {
+			stringReader := strings.NewReader(`{"rates": {"USD": "1.1"}}`)
+			stringReadCloser := io.NopCloser(stringReader)
+
+			return &http.Response{StatusCode: 200, Body: stringReadCloser}, nil
+		}
+
+		client := FixerClient{
+			Url:        "http://fixer",
+			AccessKey:  "RANDOM",
+			httpClient: mockHttpDoer(mockHttpClient),
+		}
+
+		val, err := client.GetTargetConversionRate("EUR")
+
+		actualVal := float64(0)
+		expectedErr := "json: cannot unmarshal string into Go struct field .rates.USD of type float64"
+
+		assert.Equal(t, err.Error(), expectedErr)
+		assert.Equal(t, val, actualVal)
+	})
+
 }
