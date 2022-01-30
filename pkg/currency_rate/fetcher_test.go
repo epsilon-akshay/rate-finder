@@ -36,7 +36,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 		client := FixerClient{
 			Url:        "http://fixer",
 			AccessKey:  "RANDOM",
-			httpClient: mockHttpDoer(mockHttpClient),
+			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
 		val, err := client.GetTargetConversionRate("USD")
@@ -56,7 +56,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 		client := FixerClient{
 			Url:        "http://fixer",
 			AccessKey:  "RANDOM",
-			httpClient: mockHttpDoer(mockHttpClient),
+			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
 		val, err := client.GetTargetConversionRate("USD")
@@ -79,7 +79,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 		client := FixerClient{
 			Url:        "http://fixer",
 			AccessKey:  "RANDOM",
-			httpClient: mockHttpDoer(mockHttpClient),
+			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
 		val, err := client.GetTargetConversionRate("USD")
@@ -100,7 +100,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 		client := FixerClient{
 			Url:        "http://fixer",
 			AccessKey:  "RANDOM",
-			httpClient: mockHttpDoer(mockHttpClient),
+			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
 		val, err := client.GetTargetConversionRate("EUR")
@@ -121,7 +121,7 @@ func TestGetTargetConversionRateCLient(t *testing.T) {
 		client := FixerClient{
 			Url:        "http://fixer",
 			AccessKey:  "RANDOM",
-			httpClient: mockHttpDoer(mockHttpClient),
+			HttpClient: mockHttpDoer(mockHttpClient),
 		}
 
 		val, err := client.GetTargetConversionRate("EUR")

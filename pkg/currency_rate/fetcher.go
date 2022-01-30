@@ -13,7 +13,7 @@ type Doer interface {
 type FixerClient struct {
 	AccessKey  string
 	Url        string
-	httpClient Doer
+	HttpClient Doer
 }
 
 type FixerResponse struct {
@@ -36,7 +36,7 @@ func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
 	q.Add("base", base)
 	req.URL.RawQuery = q.Encode()
 
-	res, err := c.httpClient.Do(req)
+	res, err := c.HttpClient.Do(req)
 	if err != nil {
 		return 0, err
 	}
