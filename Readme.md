@@ -14,4 +14,5 @@ To get rates, you can use the free plan of this API: https://fixer.io
 
 ## breaks taken
 1. 2022-01-30 19:36 +0530 88ef33359b890829cbdd21f98fea6e38cdb3432c 30 min break
-2. 
+2. 2022-01-30 21:21 +0530 3b8fe805d6edea11536363802d12188e64b7edcc 15 min break
+3. 
