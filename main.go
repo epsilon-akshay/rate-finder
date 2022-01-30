@@ -13,7 +13,7 @@ import (
 var Letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 const Size = 32
-const RedisHost = "localhost:6379"
+const RedisHost = "redis:6379"
 const FixerAccessKey = "d8c40d4421250bc8dbfde033a9272f40"
 const FixerURL = "http://data.fixer.io/api/latest"
 const Port = 8000

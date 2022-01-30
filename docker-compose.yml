@@ -13,6 +13,9 @@ services:
       - redis
     stdin_open: true
     tty: true
+    ports:
+      - "8000:8000"
     environment:
-      GO111MODULE: "on"
+      GO111MODULE: "ON"
+
 
