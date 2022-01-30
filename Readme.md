@@ -10,6 +10,19 @@ To get rates, you can use the free plan of this API: https://fixer.io
 2. localhost:8000/v1/currency_converter/currency/convert?base=EUR&amount=100
 3. localhost:8000/v1/currency_converter/currency/convert?base=USD&amount=100
 
+## Run test
+`make test`
+
+## Build Code 
+`make build`
+
+## Run server
+`docker-compose up`
+or 
+`go run main.go`
+or 
+`make start-server`
+
 ## Usage 
 Please Check LaundryList.md for the changes need to be made to enable this code for production.
 1. hit the generate api curl
