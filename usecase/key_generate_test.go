@@ -20,8 +20,13 @@ func TestGenerateKeyShouldReturnError(t *testing.T) {
 		Client: c,
 	}
 
+	mockGen := mockKeyGen(func() string {
+		return "ABD"
+	})
+
 	p := ProtectApiClient{
-		KeyHolder: rdb,
+		KeyHolder:    rdb,
+		KeyGenerator: mockGen,
 	}
 	_, err := p.GenerateKey(context.Background())
 	expectedErr := "dial tcp [::1]:6371: connect: connection refused"
@@ -38,11 +43,16 @@ func TestGenerateKeyShouldReturnRandomKey(t *testing.T) {
 	rdb := repository.GoRedis{
 		Client: c,
 	}
+	mockGen := mockKeyGen(func() string {
+		return "ABD"
+	})
 
 	p := ProtectApiClient{
-		KeyHolder: rdb,
+		KeyHolder:    rdb,
+		KeyGenerator: mockGen,
 	}
+
 	res, err := p.GenerateKey(context.Background())
 	require.NoError(t, err)
-	assert.Equal(t, res, "ABC")
+	assert.Equal(t, res, "ABD")
 }
