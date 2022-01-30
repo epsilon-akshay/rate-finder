@@ -1,18 +1,52 @@
 package currency_rate
 
 import (
+	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
+type Doer interface {
+	Do(req *http.Request) (*http.Response, error)
+}
 type FixerClient struct {
-	AccessKey string
-	Url       string
+	AccessKey  string
+	Url        string
+	httpClient Doer
 }
 
-func (client FixerClient) GetTargetConversionRate(base string) (float64, error) {
-	_, err := http.NewRequest("GET", client.Url, nil)
+type FixerResponse struct {
+	Success bool   `json:"success"`
+	Base    string `json:"base"`
+	Rates   struct {
+		USD float64 `json:"USD"`
+		EUR float64 `json:"EUR"`
+	} `json:"rates"`
+}
+
+func (c FixerClient) GetTargetConversionRate(base string) (float64, error) {
+	req, err := http.NewRequest("GET", c.Url, nil)
 	if err != nil {
 		return 0, err
 	}
+
+	q := req.URL.Query()
+	q.Add("access_key", c.AccessKey)
+	q.Add("base", base)
+	req.URL.RawQuery = q.Encode()
+
+	res, _ := c.httpClient.Do(req)
+
+	defer res.Body.Close()
+
+	_, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		return 0, err
+	}
+
+	if res.StatusCode != http.StatusOK {
+		return 0, fmt.Errorf("could not fetch response with statusCode %v", res.StatusCode)
+	}
+
 	return 0, nil
 }
