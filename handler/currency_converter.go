@@ -20,6 +20,7 @@ func ConvertCurrency(converter CurrencyConverter) http.HandlerFunc {
 		params := r.URL.Query()
 		base := params.Get("base")
 		amountStr := params.Get("amount")
+		apiKey := params.Get("api_key")
 
 		amount, err := strconv.ParseFloat(amountStr, 64)
 		if err != nil {
@@ -33,7 +34,7 @@ func ConvertCurrency(converter CurrencyConverter) http.HandlerFunc {
 			return
 		}
 
-		convAmount, err := converter.GetConvertedAmountFrom(r.Context(), base, amount, "")
+		convAmount, err := converter.GetConvertedAmountFrom(r.Context(), base, amount, apiKey)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			r := &Response{
