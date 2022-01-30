@@ -1,1 +1,5 @@
-package currency_converter
+package main
+
+func main() {
+
+}
