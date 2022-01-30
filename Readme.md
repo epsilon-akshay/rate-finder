@@ -11,6 +11,7 @@ To get rates, you can use the free plan of this API: https://fixer.io
 3. localhost:8000/v1/currency_converter/currency/convert?base=USD&amount=100
 
 ## Usage 
+Please Check LaundryList.md for the changes need to be made to enable this code for production.
 1. hit the generate api curl
 2. get the api key and pass it on to convertion api
    1. conversion api takes base, amount and api_key as params
